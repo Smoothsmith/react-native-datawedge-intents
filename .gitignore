@@ -1,0 +1,11 @@
+android/.gradle/
+.idea/misc.xml
+.idea/modules.xml
+.idea/reactNativeDatawedgeIntents.iml
+.idea/vcs.xml
+android/.idea/.gitignore
+android/.idea/compiler.xml
+android/.idea/gradle.xml
+android/.idea/migrations.xml
+android/.idea/misc.xml
+android/.idea/vcs.xml
