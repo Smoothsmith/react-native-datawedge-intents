@@ -9,3 +9,5 @@ android/.idea/gradle.xml
 android/.idea/migrations.xml
 android/.idea/misc.xml
 android/.idea/vcs.xml
+node_modules/
+.idea/

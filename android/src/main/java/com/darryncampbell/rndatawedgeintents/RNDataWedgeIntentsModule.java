@@ -94,6 +94,14 @@ public class RNDataWedgeIntentsModule extends ReactContextBaseJavaModule impleme
       ObservableObject.getInstance().addObserver(this);
     }
 
+    private void reactRegisterReceiver(BroadcastReceiver broadcastReceiver, IntentFilter intentFilter){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            reactContext.registerReceiver(broadcastReceiver, filter, reactContext.RECEIVER_EXPORTED);
+        } else {
+            reactContext.registerReceiver(broadcastReceiver, filter);
+        }
+    }
+
     @Override
     public void onHostResume() {
         //Log.v(TAG, "Host Resume");
@@ -106,11 +114,7 @@ public class RNDataWedgeIntentsModule extends ReactContextBaseJavaModule impleme
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_ENUMERATEDLISET);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            reactContext.registerReceiver(myEnumerateScannersBroadcastReceiver, filter, reactContext.RECEIVER_EXPORTED);
-        } else {
-            reactContext.registerReceiver(myEnumerateScannersBroadcastReceiver, filter);
-        }
+        reactRegisterReceiver(myEnumerateScannersBroadcastReceiver, filter);
 	    if (this.registeredAction != null)
           registerReceiver(this.registeredAction, this.registeredCategory);
           
@@ -362,7 +366,7 @@ public class RNDataWedgeIntentsModule extends ReactContextBaseJavaModule impleme
         filter.addAction(action);
         if (category != null && category.length() > 0)
           filter.addCategory(category);
-        this.reactContext.registerReceiver(scannedDataBroadcastReceiver, filter);
+        reactRegisterReceiver(scannedDataBroadcastReceiver, filter);
     }
 
     @ReactMethod
@@ -394,7 +398,7 @@ public class RNDataWedgeIntentsModule extends ReactContextBaseJavaModule impleme
                 }
             }
         }
-        this.reactContext.registerReceiver(genericReceiver, filter);
+        reactRegisterReceiver(genericReceiver, filter);
     }
 
     private void unregisterReceivers() {
